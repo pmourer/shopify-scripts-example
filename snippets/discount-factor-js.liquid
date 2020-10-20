@@ -1,0 +1,4 @@
+{% capture discount_factor %}{%- include 'discount-factor' -%}{% endcapture %}
+<script>
+    window.discountFactor = {{ discount_factor }}
+</script>

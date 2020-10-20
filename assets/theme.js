@@ -8913,6 +8913,8 @@ theme.Product = (function() {
     _updatePrice: function(evt) {
       var variant = evt.detail.variant;
 
+      var priceModifier = (window.discountFactor || 100) / 100
+
       var priceContainer = this.container.querySelector(
         this.selectors.priceContainer
       );
@@ -8927,7 +8929,7 @@ theme.Product = (function() {
 
       var formatRegularPrice = function(regularPriceElement, price) {
         regularPriceElement.innerHTML = theme.Currency.formatMoney(
-          price,
+          price * priceModifier,
           theme.moneyFormat
         );
       };
@@ -8969,7 +8971,7 @@ theme.Product = (function() {
         });
 
         salePrice.innerHTML = theme.Currency.formatMoney(
-          variant.price,
+          variant.price * priceModifier,
           theme.moneyFormat
         );
         priceContainer.classList.add(this.classes.productOnSale);
@@ -8983,7 +8985,7 @@ theme.Product = (function() {
       // Unit price
       if (variant.unit_price) {
         unitPrice.innerHTML = theme.Currency.formatMoney(
-          variant.unit_price,
+          variant.unit_price * priceModifier,
           theme.moneyFormat
         );
         unitPriceBaseUnit.innerHTML = this._getBaseUnit(variant);
