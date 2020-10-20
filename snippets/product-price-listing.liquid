@@ -9,15 +9,18 @@
     Usage:
     {% include 'product-price-listing', product: product %}
 {% endcomment %}
+
+{% capture discount_factor %}{%- include 'discount-factor' -%}{% endcapture %}
+
 {%- liquid
   if product.title
     assign compare_at_price = product.compare_at_price
-    assign price = product.price
+    assign price = product.price | times: discount_factor | divided_by: 100
     assign available = product.available
-    assign variant = product.variants.first
+    assign variant = product.variants.first 
   else
     assign compare_at_price = 1999
-    assign price = 1999
+    assign price = 1999 | times: discount_factor | divided_by: 100
     assign available = true
   endif
 

@@ -1,0 +1,19 @@
+{%- comment -%}
+  Pricing for wholesale customers
+{%- endcomment -%}
+{%- liquid 
+  assign discount_amount = 0
+  assign price_percentage = 1
+  assign wholesale_tag = 'WHOLESALE_'
+  if customer
+    for tag in customer.tags
+      assign check = tag | split: wholesale_tag
+      if check[0] == blank
+        assign discount_amount = check[1] | plus: 0
+        break
+      endif
+    endfor
+  endif
+  assign discount_factor = 100 | minus: discount_amount
+  -%}
+{{- discount_factor -}}
